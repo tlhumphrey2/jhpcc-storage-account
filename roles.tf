@@ -4,7 +4,7 @@
 }*/
 
 resource "azurerm_user_assigned_identity" "my-uaid" {
-  resource_group_name   = var.resource_group_name
+  resource_group_name   = module.resource_group.name
   location              = module.metadata.location
   name                  = "tlh-hpcc-uai-5"  
 }        

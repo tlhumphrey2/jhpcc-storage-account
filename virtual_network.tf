@@ -1,7 +1,6 @@
 #############
 ##vnet##
 #############
-/*
 module "virtual_network" {
   #source  = "tfe.lnrisk.io/Infrastructure/virtual-network/azurerm"
   source = "git@github.com:Azure-Terraform/terraform-azurerm-virtual-network.git?ref=v6.0.0"
@@ -83,5 +82,4 @@ resource "azurerm_route_table" "aks-hpcc-subnet-routes" {
   #   next_hop_type          = "VirtualAppliance"
   #}
 }
-*/
 #========================================================================
