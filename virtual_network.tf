@@ -1,12 +1,24 @@
 #############
 ##vnet##
 #############
+data "azurerm_virtual_network" "vnet" {
+  name = var.virtual_network_name
+  resource_group_name = var.resource_group_name
+}
+
+data "azurerm_subnet" "aks-hpcc" {
+  name = var.subnet_name
+  resource_group_name = var.resource_group_name
+  virtual_network_name = var.virtual_network_name
+}
+/*
 module "virtual_network" {
   #source  = "tfe.lnrisk.io/Infrastructure/virtual-network/azurerm"
   source = "git@github.com:Azure-Terraform/terraform-azurerm-virtual-network.git?ref=v6.0.0"
 
   naming_rules        = module.naming.yaml
-  resource_group_name = module.resource_group.name
+  resource_group_name = var.resource_group_name
+  #resource_group_name = module.resource_group.name
   #resource_group_name = data.azurerm_kubernetes_cluster.wipe-play-aks.name
   location            = module.metadata.location
   names               = module.metadata.names
@@ -20,18 +32,21 @@ module "virtual_network" {
 # The following instead of using the commented-out aks-hpcc subnet, above.
 resource "azurerm_subnet" "aks-hpcc" {
   name                 = "aks-hpcc"
-  resource_group_name  = module.resource_group.name
+  resource_group_name  = var.resource_group_name
+  #resource_group_name  = module.resource_group.name
   virtual_network_name = module.virtual_network.vnet.name
   address_prefixes     = ["10.1.0.0/24"]
   service_endpoints = ["Microsoft.Storage", "Microsoft.ContainerRegistry"]
 
   private_endpoint_network_policies_enabled = true
 }
+*/
 
 resource "azurerm_route_table" "aks-hpcc-subnet-routes" {
   name                          = "routes-of-aks-hpcc-subnet"
   location                      = module.metadata.location
-  resource_group_name           = module.resource_group.name
+  resource_group_name           = var.resource_group_name
+  #resource_group_name           = module.resource_group.name
   disable_bgp_route_propagation = true
 
   route {

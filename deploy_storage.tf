@@ -3,7 +3,7 @@ module "deploy_storage" {
   source = "./smodule/storage"
 
   tags = local.all_tags
-  resource_group_name = module.resource_group.name
+  resource_group_name = var.resource_group_name
   location = module.metadata.location
   environment = "dev"
 
@@ -18,9 +18,9 @@ module "deploy_storage" {
     replication_type     = "ZRS"
     authorized_ip_ranges = merge(var.storage_account_authorized_ip_ranges, { my_ip = data.http.my_ip.response_body })
     delete_protection    = false
-    #subnet_ids = { "aks-hpcc" = azurerm_subnet.aks-hpcc.id }
+    #subnet_ids = { "aks-hpcc" = data.azurerm_subnet.aks-hpcc.id }
     subnet_ids = merge({
-      "aks-hpcc" = azurerm_subnet.aks-hpcc.id # changed to this when aks created in separate TF
+      "aks-hpcc" = data.azurerm_subnet.aks-hpcc.id # changed to this when aks created in separate TF
     }, var.azure_admin_subnets)
   }
 
@@ -32,9 +32,9 @@ module "deploy_storage" {
          replication_type     = "ZRS"
          authorized_ip_ranges = merge(var.storage_account_authorized_ip_ranges, { my_ip = data.http.my_ip.response_body })
          delete_protection    = false
-         #subnet_ids = { "aks-hpcc" = azurerm_subnet.aks-hpcc.id }
+         #subnet_ids = { "aks-hpcc" = data.azurerm_subnet.aks-hpcc.id }
          subnet_ids = merge({
-           "aks-hpcc" = azurerm_subnet.aks-hpcc.id # changed to this when aks created in separate TF
+           "aks-hpcc" = data.azurerm_subnet.aks-hpcc.id # changed to this when aks created in separate TF
          }, var.azure_admin_subnets)
        }
      }

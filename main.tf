@@ -39,9 +39,13 @@ module "metadata" {
   resource_group_type = "app"
 }
 
-module "resource_group" {
+data "azurerm_resource_group" "rg" {
+  name = var.resource_group_name
+}
+
+/*module "resource_group" {
   source   = "git@github.com:Azure-Terraform/terraform-azurerm-resource-group.git?ref=v2.1.0"
   location = module.metadata.location
   names    = module.metadata.names
   tags     = local.all_tags
-}
+}*/
