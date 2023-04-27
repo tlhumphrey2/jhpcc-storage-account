@@ -46,7 +46,6 @@ provider "azurerm" {
   use_msi = true
   storage_use_azuread = true
   subscription_id = "49219efc-701f-4c7e-a2ac-c600308a69e3"
-  #subscription_id = module.subscription.output.subscription_id
 }
 
 provider "azuread" {}
