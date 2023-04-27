@@ -76,7 +76,7 @@ resource "azurerm_storage_account" "blob_nfs_admin_services" {
   }
 }
 
-resource "kubernetes_secret" "azurefiles_admin_services" {
+/*resource "kubernetes_secret" "azurefiles_admin_services" {
   count = contains([for storage in var.admin_services_storage : storage.type], "azurefiles") ? 1 : 0
 
   depends_on = [
@@ -96,7 +96,7 @@ resource "kubernetes_secret" "azurefiles_admin_services" {
   }
 
   type = "kubernetes.io/generic"
-}
+}*/
 
 resource "azurerm_storage_share" "azurefiles_admin_services" {
   for_each = local.azurefiles_services_storage

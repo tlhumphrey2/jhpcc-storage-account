@@ -14,13 +14,7 @@ module "virtual_network" {
 
   enforce_subnet_names = false
 
-  #address_space = [var.cidr_block]
   address_space = ["10.1.0.0/22"]
-  #dns_servers   = [local.firewall_ip]
-
-  #route_tables = {
-  # default = local.route_table
-  #}
 }
 #========================================================================
 # The following instead of using the commented-out aks-hpcc subnet, above.
@@ -28,11 +22,10 @@ resource "azurerm_subnet" "aks-hpcc" {
   name                 = "aks-hpcc"
   resource_group_name  = module.resource_group.name
   virtual_network_name = module.virtual_network.vnet.name
-  #address_prefixes     = [var.cidr_block_app]
   address_prefixes     = ["10.1.0.0/24"]
   service_endpoints = ["Microsoft.Storage", "Microsoft.ContainerRegistry"]
-  #private_endpoint_network_policies_enabled = true
-  #private_link_service_network_policies_enabled = true
+
+  private_endpoint_network_policies_enabled = true
 }
 
 resource "azurerm_route_table" "aks-hpcc-subnet-routes" {
